@@ -13,7 +13,7 @@ namespace MVCGarage.Models
 
     public enum SearchOption 
     {
-        RegNr,Owner,Date
+        RefId,RegNr,Owner,Date
     }
 
     public class ParkingSpot

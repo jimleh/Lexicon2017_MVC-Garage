@@ -7,8 +7,21 @@ using System.Web.Mvc;
 
 namespace MVCGarage.Controllers
 {
+
+
     public class GarageController : Controller
     {
+        enum type
+        {
+            Car,
+            MC,
+            Buss,
+            Truck
+        };
+        
+        
+        
+        
         // GET: Garage
         // Här Ska Listan av alla parkerade bilar + nr av öppna platser.
         public ActionResult Index()
@@ -34,7 +47,7 @@ namespace MVCGarage.Controllers
             return View();
         }
         // POST: remove
-        // Skapa en Form som sparar en parkering.
+        // Tar .
         public ActionResult Remove(Vehicle vehicle)
         {
             return View(vehicle);

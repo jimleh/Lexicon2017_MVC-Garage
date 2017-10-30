@@ -22,8 +22,8 @@ namespace MVCGarage.Migrations
                     ParkingID = 1,
                     Type = VehicleType.Car,
                     RegistrationNumber = "111-111",
-                    Date = DateTime.Now.ToString(),
-                    Spot = new ParkingSpot { XPosition=1, YPosition=1},
+                    DateParked = DateTime.Now.ToString(),
+                    ParkingSpot = 1,
                     Size=3,
                     Owner="Christine"
 

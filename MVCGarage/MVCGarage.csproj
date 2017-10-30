@@ -126,6 +126,10 @@
     <Compile Include="Migrations\201710301007010_Initial.Designer.cs">
       <DependentUpon>201710301007010_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710301257490_UpdatedVehicle.cs" />
+    <Compile Include="Migrations\201710301257490_UpdatedVehicle.Designer.cs">
+      <DependentUpon>201710301257490_UpdatedVehicle.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\VehicleModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -176,6 +180,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710301007010_Initial.resx">
       <DependentUpon>201710301007010_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710301257490_UpdatedVehicle.resx">
+      <DependentUpon>201710301257490_UpdatedVehicle.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

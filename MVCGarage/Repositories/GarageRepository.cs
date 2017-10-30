@@ -20,6 +20,11 @@ namespace MVCGarage.Repositories
             return context.Vehicles.ToList();
         }
 
+        public IEnumerable<Vehicle> getFilteredVehicles()
+        {
+            return context.Vehicles.ToList();
+        
+        }
 
 
     }

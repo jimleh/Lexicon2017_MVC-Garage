@@ -33,6 +33,12 @@ namespace MVCGarage.Repositories
         public IEnumerable<Vehicle> getFilteredVehicles(string search, bool[] options)
         {
             IEnumerable<Vehicle> result = new List<Vehicle>();
+            IEnumerable<Vehicle> query = context.Vehicles;
+
+            if (!options[(int)SearchOption.Checkout]) {
+                query = query.Where(a => a.DateCheckout == null);
+            }
+
 
             for (int i = 0; i < options.Length; i++)
             {
@@ -42,7 +48,7 @@ namespace MVCGarage.Repositories
                     {
                         case (int)SearchOption.RefId:
                             result = result.Union(
-                                context.Vehicles.Where(
+                                query.Where(
                                     a => a.ParkingID.ToString().ToLower().Contains(
                                         search.ToLower()
                                     )
@@ -51,7 +57,7 @@ namespace MVCGarage.Repositories
                             break;
                         case (int)SearchOption.RegNr:
                             result = result.Union(
-                                context.Vehicles.Where(
+                                query.Where(
                                     a => a.RegistrationNumber.ToString().ToLower().Contains(
                                         search.ToLower()
                                     )
@@ -60,7 +66,7 @@ namespace MVCGarage.Repositories
                             break;
                         case (int)SearchOption.Owner:
                             result = result.Union(
-                                context.Vehicles.Where(
+                                query.Where(
                                     a => a.Owner.ToString().ToLower().Contains(
                                         search.ToLower()
                                     )
@@ -69,7 +75,7 @@ namespace MVCGarage.Repositories
                             break;
                         case (int)SearchOption.Date:
                             result = result.Union(
-                                context.Vehicles.Where(
+                                query.Where(
                                     a => a.DateParked.ToString().ToLower().Contains(
                                         search.ToLower()
                                     )

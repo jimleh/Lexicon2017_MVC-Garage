@@ -171,6 +171,7 @@
     <Content Include="Views\Garage\Index.cshtml" />
     <Content Include="Views\Garage\Add.cshtml" />
     <Content Include="Views\Garage\Remove.cshtml" />
+    <Content Include="Views\Garage\Options.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710301007010_Initial.resx">

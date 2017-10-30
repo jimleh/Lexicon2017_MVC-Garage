@@ -13,8 +13,17 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-<!--Form för att Söka efter ett fordon-->
+
+<input type="button" value="Check in" />
+<br/>
+
 <form method="get">
+    <input type="search" name="Search" value="Search vehicle..." />
+    <label><input type="checkbox" name="RegNR" value="true" />RegNr</label>
+    <label><input type="checkbox" name="Name" value="true" />Name</label>
+    <label><input type="checkbox" name="Date" value="true" />Date</label>
+
+    <button type="submit">Search</button>
 
 </form>
 
@@ -22,19 +31,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.DisplayNameFor(model => model.ParkingID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Owner)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RegistrationNumber)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateParked)
+            @Html.DisplayNameFor(model => model.Date)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Spot)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Size)
+           Options
         </th>
         <th></th>
     </tr>
@@ -42,7 +51,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Type)
+            @Html.DisplayFor(modelItem => item.ParkingID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Owner)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RegistrationNumber)
@@ -51,15 +63,7 @@
             @Html.DisplayFor(modelItem => item.DateParked)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Spot)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Size)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "options", new { /* id=item.PrimaryKey */ }) 
         </td>
     </tr>
 }

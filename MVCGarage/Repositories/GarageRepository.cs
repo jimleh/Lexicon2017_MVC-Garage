@@ -20,11 +20,52 @@ namespace MVCGarage.Repositories
             return context.Vehicles.ToList();
         }
 
-        public IEnumerable<Vehicle> getFilteredVehicles()
+        public IEnumerable<Vehicle> getFilteredVehicles(string search, bool[] options)
         {
-            return context.Vehicles.ToList();
-        
+            IEnumerable<Vehicle> result = new List<Vehicle>();
+
+            for (int i = 0; i < options.Length; i++)
+            {
+                if (options[i])
+                {
+                    switch (i)
+                    {
+                        case (int)SearchOption.RegNr:
+                            result = result.Union(
+                                context.Vehicles.Where(
+                                    a => a.RegistrationNumber.ToString().ToLower().Contains(
+                                        search.ToLower()
+                                    )
+                                )
+                            );
+                            break;
+                        case (int)SearchOption.Owner:
+                            result = result.Union(
+                                context.Vehicles.Where(
+                                    a => a.Owner.ToString().ToLower().Contains(
+                                        search.ToLower()
+                                    )
+                                )
+                            );
+                            break;
+                        case (int)SearchOption.Date:
+                            result = result.Union(
+                                context.Vehicles.Where(
+                                    a => a.Date.ToString().ToLower().Contains(
+                                        search.ToLower()
+                                    )
+                                )
+                            );
+                            break;
+                    }
+                }
+            }
+            return result;
         }
+
+
+
+
 
 
     }

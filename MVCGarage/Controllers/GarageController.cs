@@ -13,6 +13,9 @@ namespace MVCGarage.Controllers
     public class GarageController : Controller
     {
         GarageRepository repo = new GarageRepository();
+
+
+
         // GET: Garage
         // Här Ska Listan av alla parkerade bilar + nr av öppna platser.
         public ActionResult Index()

@@ -47,6 +47,12 @@ namespace MVCGarage.Controllers
             return View(vehicle);
         }
 
+        //visar detaljer och edit/checkoutfunktioner för Vehicles
+        public ActionResult Details(Vehicle vehicle)
+        {
+            return View(vehicle);
+        }
+
 
     }
 }

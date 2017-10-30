@@ -33,6 +33,17 @@ namespace MVCGarage.Models
             DateParked = DateTime.Now.ToString("yyyy-MM-dd HH:mm"); // With some basic formatting
         }
 
+        public void CheckOut(string outdate = null){
+            if (outdate == null)
+            {
+                DateCheckout = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
+            }
+            else 
+            {
+                DateCheckout = outdate;
+            }
+        }
+
         // Will this be used at all?
         public override string ToString() 
         {

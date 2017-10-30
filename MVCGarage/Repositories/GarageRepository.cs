@@ -1,6 +1,7 @@
 ﻿using MVCGarage.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -127,5 +128,37 @@ namespace MVCGarage.Repositories
             return (query.ToList());
 
         }
+
+        public void CheckInVehicle(Vehicle vehicle)
+        {
+            context.Vehicles.Add(vehicle);
+            context.SaveChanges();
+        }
+        public void DeleteVehicle(Vehicle vehicle)
+        {
+            context.Vehicles.Remove(vehicle);
+            context.SaveChanges();
+        }
+        public void EditVehicle(Vehicle vehicle)
+        {
+            context.Entry(vehicle).State = EntityState.Modified;
+            context.SaveChanges();
+        }
+
+        public void CheckOutVehicle(Vehicle vehicle)
+        {
+
+            vehicle.CheckOut();
+
+
+
+
+            
+            context.Entry(vehicle).State = EntityState.Modified;
+            context.SaveChanges();
+        }
+
+        
+
     }
 }

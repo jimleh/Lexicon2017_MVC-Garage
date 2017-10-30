@@ -36,6 +36,11 @@ namespace MVCGarage.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Add(Vehicle vehicle)
         {
+            if (ModelState.IsValid)
+            {
+                repo.CheckInVehicle(vehicle);
+                return RedirectToAction("Index");
+            }
             return View(vehicle);
         }
 

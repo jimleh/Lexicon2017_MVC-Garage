@@ -28,8 +28,12 @@ namespace MVCGarage.Controllers
         {
             return View();
         }
+
+
         // POST: add
         // Skapa en Form som sparar en parkering.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Add(Vehicle vehicle)
         {
             return View(vehicle);

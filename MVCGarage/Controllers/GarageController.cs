@@ -11,16 +11,6 @@ namespace MVCGarage.Controllers
 
     public class GarageController : Controller
     {
-        enum type
-        {
-            Car,
-            MC,
-            Buss,
-            Truck
-        };
-        
-        
-        
         
         // GET: Garage
         // Här Ska Listan av alla parkerade bilar + nr av öppna platser.

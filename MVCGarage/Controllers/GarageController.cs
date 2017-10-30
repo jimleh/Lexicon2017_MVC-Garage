@@ -1,4 +1,5 @@
 ﻿using MVCGarage.Models;
+using MVCGarage.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,12 +12,12 @@ namespace MVCGarage.Controllers
 
     public class GarageController : Controller
     {
-        
+        GarageRepository repo = new GarageRepository();
         // GET: Garage
         // Här Ska Listan av alla parkerade bilar + nr av öppna platser.
         public ActionResult Index()
         {
-            return View();
+            return View(repo.getAllVehicles());
         }
 
         // GET: add

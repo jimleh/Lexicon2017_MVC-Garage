@@ -37,7 +37,7 @@ namespace MVCGarage.Controllers
             return View();
         }
         // POST: remove
-        // Tar .
+        // Tar bort en vehicle från parkeringen 
         public ActionResult Remove(Vehicle vehicle)
         {
             return View(vehicle);

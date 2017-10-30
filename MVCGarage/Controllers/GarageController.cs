@@ -47,9 +47,9 @@ namespace MVCGarage.Controllers
             return View(vehicle);
         }
 
-        public ActionResult Options()
+        public ActionResult Options(Vehicle vehicle)
         {
-            return Options();
+            return View(vehicle);
         }
     }
 }

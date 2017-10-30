@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MVCGarage.Models
 {
-    public static enum VehicleType
+    public enum VehicleType
     {
         MC, Car, Bus, Truck
     }

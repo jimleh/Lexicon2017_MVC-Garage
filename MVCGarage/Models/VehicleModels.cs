@@ -16,44 +16,34 @@ namespace MVCGarage.Models
         RefId,RegNr,Owner,Date
     }
 
-    public class ParkingSpot
-    {
-        public int XPosition { get; set; }
-        public int YPosition { get; set; }
-
-        public override string ToString()
-        {
-            return "[" + XPosition + ", " + YPosition + "]";
-        }
-    }
-
     public class Vehicle
     {
         [Key]
         public int ParkingID { get; set; }
         public VehicleType Type { get; set; }
         public string RegistrationNumber { get; set; }
-        public string Date { get; set; }
-        public ParkingSpot Spot { get; set; } // Maybe change it?
+        public string DateParked { get; set; } //
+        public string DateCheckout { get; set; } // 
+        public int ParkingSpot { get; set; }
         public int Size { get; set; }
         public string Owner { get; set; }
 
-        public override string ToString()
+        public Vehicle()
+        {
+            DateParked = DateTime.Now.ToString("yyyy-MM-dd HH:mm"); // With some basic formatting
+        }
+
+        // Will this be used at all?
+        public override string ToString() 
         {
             return RegistrationNumber
                 + ":" + Type
-                + ":" + Date
-                + ":" + Spot.ToString()
+                + ":" + DateParked
+                + ":" + ParkingSpot
                 + ":" + Size
                 + ":" + Owner;
         }
-
-        public string BasicInfo()
-        {
-            return RegistrationNumber + ":" + Type;
-        }
     }
-
 
     public class MC : Vehicle
     {

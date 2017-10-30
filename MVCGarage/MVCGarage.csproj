@@ -122,6 +122,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710301007010_Initial.cs" />
+    <Compile Include="Migrations\201710301007010_Initial.Designer.cs">
+      <DependentUpon>201710301007010_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\VehicleModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -168,7 +172,11 @@
     <Content Include="Views\Garage\Add.cshtml" />
     <Content Include="Views\Garage\Remove.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201710301007010_Initial.resx">
+      <DependentUpon>201710301007010_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

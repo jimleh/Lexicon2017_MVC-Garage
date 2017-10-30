@@ -1,5 +1,6 @@
 namespace MVCGarage.Migrations
 {
+    using MVCGarage.Models;
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
@@ -14,10 +15,25 @@ namespace MVCGarage.Migrations
 
         protected override void Seed(MVCGarage.GarageContext context)
         {
-            //  This method will be called after migrating to the latest version.
+            context.Vehicles.AddOrUpdate(
+                v=>v.ParkingID,
+                new Vehicle
+                {
+                    ParkingID = 1,
+                    Type = VehicleType.Car,
+                    RegistrationNumber = "111-111",
+                    Date = DateTime.Now.ToString(),
+                    Spot = new ParkingSpot { XPosition=1, YPosition=1},
+                    Size=3,
+                    Owner="Christine"
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data.
+                }
+                
+                
+                
+                
+                
+                );
         }
     }
 }

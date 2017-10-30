@@ -127,9 +127,5 @@ namespace MVCGarage.Repositories
             return (query.ToList());
 
         }
-
-
-
-
     }
 }

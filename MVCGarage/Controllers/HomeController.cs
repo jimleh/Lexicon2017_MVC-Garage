@@ -26,5 +26,15 @@ namespace MVCGarage.Controllers
 
             return View();
         }
+
+        public ActionResult Search()
+        {
+            return View();
+        }
+
+        public ActionResult CheckIn()
+        {
+            return View();
+        }
     }
 }

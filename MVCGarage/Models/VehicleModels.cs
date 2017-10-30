@@ -5,17 +5,44 @@ using System.Web;
 
 namespace MVCGarage.Models
 {
-    public class Vehicle
+    public static enum VehicleType
     {
-        public string Type { get; set; }
-        public string RegistrationNumber { get; set; }
-        public string Date { get; set; }
-        public string Spot { get; set; }
-        public int Size { get; set; }
+        MC, Car, Bus, Truck
+    }
+
+    public class ParkingSpot
+    {
+        public int XPosition { get; set; }
+        public int YPosition { get; set; }
 
         public override string ToString()
         {
-            return base.ToString();
+            return "[" + XPosition + ", " + YPosition + "]";
+        }
+    }
+
+    public class Vehicle
+    {
+        public VehicleType Type { get; set; }
+        public string RegistrationNumber { get; set; }
+        public string Date { get; set; }
+        public ParkingSpot Spot { get; set; } // Maybe change it?
+        public int Size { get; set; }
+        public string Owner { get; set; }
+
+        public override string ToString()
+        {
+            return RegistrationNumber
+                + ":" + Type
+                + ":" + Date
+                + ":" + Spot.ToString()
+                + ":" + Size
+                + ":" + Owner;
+        }
+
+        public string BasicInfo()
+        {
+            return RegistrationNumber + ":" + Type;
         }
     }
 
@@ -24,7 +51,7 @@ namespace MVCGarage.Models
     {
         public MC()
         {
-            Type = "MC";
+            Type = VehicleType.MC;
             Size = 1;
         }
     }
@@ -32,15 +59,15 @@ namespace MVCGarage.Models
     {
         public Car()
         {
-            Type = "Car";
+            Type = VehicleType.Car;
             Size = 1;
         }
     }
-    public class BUS : Vehicle
+    public class Bus : Vehicle
     {
-        public BUS()
+        public Bus()
         {
-            Type = "BUS";
+            Type = VehicleType.Bus;
             Size = 3;
         }
     }
@@ -48,7 +75,7 @@ namespace MVCGarage.Models
     {
         public Truck()
         {
-            Type = "Truck";
+            Type = VehicleType.Truck;
             Size = 3;
         }
     }

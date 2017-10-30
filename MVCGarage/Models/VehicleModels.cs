@@ -11,6 +11,11 @@ namespace MVCGarage.Models
         MC, Car, Bus, Truck
     }
 
+    public enum SearchOption 
+    {
+        RegNr,Owner,Date
+    }
+
     public class ParkingSpot
     {
         public int XPosition { get; set; }

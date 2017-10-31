@@ -32,7 +32,7 @@ namespace MVCGarage.Controllers
         // Skapa en Form som sparar en parkering.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(Vehicle vehicle)
+        public ActionResult CheckIn(Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {

@@ -13,12 +13,22 @@ namespace MVCGarage.Repositories
         private SearchOption currentSort;
         private bool sortAscending;
 
+        private bool[] parkingspots = new bool[100];  
+
+
         public GarageRepository()
         {
             context = new GarageContext();
             currentSort = SearchOption.RefId;
             sortAscending = false;
+            for (int i = 0; i < parkingspots.Length; i++)
+            {
+                parkingspots[i] =   false;
+            }
         }
+
+
+
 
         public IEnumerable<Vehicle> getAllVehicles()
         {
@@ -31,13 +41,17 @@ namespace MVCGarage.Repositories
             return v;
         }
 
-        public IEnumerable<Vehicle> getFilteredVehicles(string search, bool[] options)
+        public IEnumerable<Vehicle> getFilteredVehicles(string search = null, bool[] options)
         {
             IEnumerable<Vehicle> result = new List<Vehicle>();
             IEnumerable<Vehicle> query = context.Vehicles;
 
             if (!options[(int)SearchOption.Checkout]) {
                 query = query.Where(a => a.DateCheckout == null);
+            }
+
+            if (search == null){
+                result = query;
             }
 
 
@@ -135,20 +149,17 @@ namespace MVCGarage.Repositories
             context.SaveChanges();
         }
 
-
         public void DeleteVehicle(Vehicle vehicle)
         {
             context.Vehicles.Remove(vehicle);
             context.SaveChanges();
         }
 
-
         public void EditVehicle(Vehicle vehicle)
         {
             context.Entry(vehicle).State = EntityState.Modified;
             context.SaveChanges();
         }
-
 
         public void CheckOutVehicle(Vehicle vehicle)
         {
@@ -158,5 +169,9 @@ namespace MVCGarage.Repositories
             context.SaveChanges();
         }
 
+
+        public int GetParkingSpot()
+        {
+        }
     }
 }

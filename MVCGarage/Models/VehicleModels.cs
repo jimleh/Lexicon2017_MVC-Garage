@@ -31,6 +31,22 @@ namespace MVCGarage.Models
         public Vehicle()
         {
             DateParked = DateTime.Now.ToString("yyyy-MM-dd HH:mm"); // With some basic formatting
+            switch (Type)
+            {
+                case VehicleType.Car:
+                case VehicleType.MC:
+                    Size = 1;
+                    break;
+                case VehicleType.Bus:
+                    Size = 3;
+                    break;
+                case VehicleType.Truck:
+                    Size = 2;
+                    break;
+                default:
+                    Size = 1;
+                    break;
+            }
         }
 
         public void CheckOut(string outdate = null){

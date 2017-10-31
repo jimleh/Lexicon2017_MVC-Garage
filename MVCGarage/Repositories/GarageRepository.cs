@@ -170,8 +170,35 @@ namespace MVCGarage.Repositories
         }
 
 
-        public int GetParkingSpot()
+        private int ParkingSpotCheckFree(int start,int size){
+
+            for(int i = start; i < start+size;i++){
+                if (parkingspots[i]) {
+                    return -1;
+                }
+            }
+            return start;
+                
+        }
+
+        public int GetParkingSpot(int size)
         {
+            int freespot = -1; 
+            for(int i = 0; i < parkingspots.Length;i++){
+                freespot = ParkingSpotCheckFree(i,size);
+                if (freespot != -1)
+                {
+                    for (int j = 0; i < size; i++)
+                    {
+                        parkingspots[i + j] = true;
+                    }
+                    return freespot;
+                }
+                else {
+                    i += size - 1;
+                }
+            }
+            return -1;
         }
     }
 }

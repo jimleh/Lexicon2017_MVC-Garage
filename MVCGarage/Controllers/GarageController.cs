@@ -84,9 +84,12 @@ namespace MVCGarage.Controllers
         {
             if (ModelState.IsValid)
             {
-                vehicle.ParkingSpot = repo.GetParkingSpot();
-                repo.CheckInVehicle(vehicle);
-                return RedirectToAction("Index");
+                vehicle.ParkingSpot = repo.GetParkingSpot(vehicle.Size);
+                if (vehicle.ParkingSpot != -1)
+                {
+                    repo.CheckInVehicle(vehicle);
+                    return RedirectToAction("Index");
+                }
             }
             return View(vehicle);
         }

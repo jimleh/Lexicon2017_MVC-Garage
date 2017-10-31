@@ -29,10 +29,6 @@ namespace MVCGarage.Migrations
 
                 }
                 
-                
-                
-                
-                
                 );
         }
     }

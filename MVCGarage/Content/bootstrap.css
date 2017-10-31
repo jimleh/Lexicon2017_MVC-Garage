@@ -4384,8 +4384,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default {
-  background-color: #f8f8f8;
-  border-color: #e7e7e7;
+  background-color: chocolate;
+  border-color: chocolate;
 }
 
 .navbar-default .navbar-brand {
@@ -4501,8 +4501,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse {
-  background-color: #222222;
-  border-color: #080808;
+  background-color: #456d26;
+  border-color: #18370f;
 }
 
 .navbar-inverse .navbar-brand {

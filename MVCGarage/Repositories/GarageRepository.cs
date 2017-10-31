@@ -25,7 +25,7 @@ namespace MVCGarage.Repositories
             return context.Vehicles.ToList();
         }
 
-        public Vehicle getSpecificVehicle(int id) 
+        public Vehicle getSpecificVehicle(int? id) 
         {
             Vehicle v = context.Vehicles.FirstOrDefault(a => a.ParkingID == id);
             return v;

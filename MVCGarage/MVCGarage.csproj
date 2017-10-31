@@ -174,7 +174,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Garage\Index.cshtml" />
     <Content Include="Views\Garage\Add.cshtml" />
-    <Content Include="Views\Shared\Remove.cshtml" />
     <Content Include="Views\Garage\Options.cshtml" />
   </ItemGroup>
   <ItemGroup>

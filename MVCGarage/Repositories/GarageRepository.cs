@@ -41,7 +41,7 @@ namespace MVCGarage.Repositories
             return v;
         }
 
-        public IEnumerable<Vehicle> getFilteredVehicles(string search = null, bool[] options)
+        public IEnumerable<Vehicle> getFilteredVehicles(string search = null, bool[] options = null)
         {
             IEnumerable<Vehicle> result = new List<Vehicle>();
             IEnumerable<Vehicle> query = context.Vehicles;

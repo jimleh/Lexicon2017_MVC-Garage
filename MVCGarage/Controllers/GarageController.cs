@@ -23,7 +23,7 @@ namespace MVCGarage.Controllers
         }
 
         // GET: add
-        public ActionResult Add()
+        public ActionResult CheckIn()
         {
             return View();
         }

@@ -134,31 +134,29 @@ namespace MVCGarage.Repositories
             context.Vehicles.Add(vehicle);
             context.SaveChanges();
         }
+
+
         public void DeleteVehicle(Vehicle vehicle)
         {
             context.Vehicles.Remove(vehicle);
             context.SaveChanges();
         }
+
+
         public void EditVehicle(Vehicle vehicle)
         {
             context.Entry(vehicle).State = EntityState.Modified;
             context.SaveChanges();
         }
 
+
         public void CheckOutVehicle(Vehicle vehicle)
         {
-
             vehicle.CheckOut();
-
-
-
-
             
             context.Entry(vehicle).State = EntityState.Modified;
             context.SaveChanges();
         }
-
-        
 
     }
 }

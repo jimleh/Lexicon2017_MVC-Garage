@@ -130,6 +130,10 @@
     <Compile Include="Migrations\201710301257490_UpdatedVehicle.Designer.cs">
       <DependentUpon>201710301257490_UpdatedVehicle.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710311431591_Parkingspots.cs" />
+    <Compile Include="Migrations\201710311431591_Parkingspots.Designer.cs">
+      <DependentUpon>201710311431591_Parkingspots.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\VehicleModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -182,6 +186,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710301257490_UpdatedVehicle.resx">
       <DependentUpon>201710301257490_UpdatedVehicle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710311431591_Parkingspots.resx">
+      <DependentUpon>201710311431591_Parkingspots.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

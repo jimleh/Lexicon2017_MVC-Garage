@@ -37,6 +37,7 @@ namespace MVCGarage.Migrations
             {
                 for (int j = 1; j <= 25; j++)
                 {
+                    // Meh
                     bool occupied;
                     if (context.Vehicles.FirstOrDefault(v => v.ParkingSpot == index) != null)
                     {

@@ -12,17 +12,9 @@
 
 <h2>Garage AB</h2>
 
-
-<!--Knapp för att checka in ett fordon-->
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-
-<input type="button" value="Check in" />
-<br />
-<br />
+<form method="get" action="/Garage/CheckIn">
+    <button type="submit">Check in</button>
+</form>
 
 <form method="get">
     <input type="search" name="search" value="Search vehicle..." />

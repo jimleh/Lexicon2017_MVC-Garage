@@ -82,6 +82,7 @@ namespace MVCGarage.Controllers
         {
             if (ModelState.IsValid)
             {
+                vehicle.FixStuff();
                 vehicle.ParkingSpot = repo.GetParkingSpot(vehicle.Size);
                 if (vehicle.ParkingSpot != -1)
                 {
@@ -93,21 +94,13 @@ namespace MVCGarage.Controllers
         }
 
 
-        public ActionResult CheckOut()
-        {
-            return View();
-        }
-
-        // Tar bort en vehicle från parkeringen 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult CheckOut(int? id)
         {
             Vehicle vehicle = repo.getSpecificVehicle(id);
             repo.CheckOutVehicle(vehicle);
             return RedirectToAction("Index");
         }
-
+       
         public ActionResult Options(int? id)
         {
             var vehicle = repo.getSpecificVehicle(id);

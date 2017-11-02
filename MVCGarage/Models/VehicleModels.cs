@@ -28,7 +28,7 @@ namespace MVCGarage.Models
         public int Size { get; set; }
         public string Owner { get; set; }
 
-        public Vehicle()
+        public void FixStuff()
         {
             DateParked = DateTime.Now.ToString("yyyy-MM-dd HH:mm"); // With some basic formatting
             switch (Type)

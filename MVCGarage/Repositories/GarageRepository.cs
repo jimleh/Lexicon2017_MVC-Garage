@@ -172,6 +172,8 @@ namespace MVCGarage.Repositories
 
         public void DeleteVehicle(Vehicle vehicle)
         {
+            // Is this supposed to be here?
+            ClearParkingSpotsForVehicle(vehicle.ParkingID, vehicle.Size);
             context.Vehicles.Remove(vehicle);
             context.SaveChanges();
         }
@@ -190,35 +192,57 @@ namespace MVCGarage.Repositories
             context.SaveChanges();
         }
 
+        // To clear all the parking spots after a vehicle has been removed
+        protected void ClearParkingSpotsForVehicle(int id, int size)
+        {
+            int index = 0;
+            for (int i = 0; i < parkingSpots.GetLength(0); i++)
+            {
+                for (int j = 0; j < parkingSpots.GetLength(1); j++)
+                {
+                    index++;
+                    if(index == id)
+                    {
+                        for (int k = 0; k < size; k++)
+                        {
+                            parkingSpots[i, j + k] = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Modified version of the previous ParkingSpotCheckFree method
+        private bool ParkingSpotCheckFree(int x, int start, int size)
+        {
+            for (int i = start; i < start + size; i++)
+            {
+                if (i > parkingSpots.GetLength(1) || parkingSpots[x, i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
         // 2d, but with an array instad of using the database
         public int GetParkingSpot(int size)
         {
-            int index = 0;
-            bool found = false;
+            int index = 1;
 
             for(int i = 0; i < parkingSpots.GetLength(0); i++)
             {
                 for(int j = 0; j < parkingSpots.GetLength(1); j++)
                 {
-                    found = true;
-                    index++;
-                    for(int k = j; k < j+size; k++)
+                    if(ParkingSpotCheckFree(i, j, size))
                     {
-                        if(parkingSpots[i, k])
-                        {
-                            found = false;
-                            break;
-                        }
-                    }
-                    if(found)
-                    {
-                        for(int k = 0; k < size; k++)
+                        for (int k = 0; k < size; k++)
                         {
                             parkingSpots[i, j + k] = true;
                         }
                         return index;
                     }
+                    index++;
                 }
             }
             return -1;

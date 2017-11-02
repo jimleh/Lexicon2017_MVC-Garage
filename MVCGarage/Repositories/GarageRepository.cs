@@ -14,16 +14,35 @@ namespace MVCGarage.Repositories
         private bool sortAscending;
 
         //private bool[] parkingspots = new bool[100];
+        private bool[,] parkingSpots = new bool[10, 25];
 
         public GarageRepository()
         {
             context = new GarageContext();
             currentSort = SearchOption.RefId;
             sortAscending = false;
-            //for (int i = 0; i < parkingspots.Length; i++)
-            //{
-            //    parkingspots[i] = false;
-            //}
+            InitParkingSpots();
+        }
+
+        // Find all the occupied parking slots
+        protected void InitParkingSpots()
+        {
+            int index = 0;
+            for (int i = 0; i < parkingSpots.GetLength(0); i++)
+            {
+                for (int j = 0; j < parkingSpots.GetLength(1); j++)
+                {
+                    index++;
+                    var tmp = context.Vehicles.FirstOrDefault(v => v.ParkingSpot == index);
+                    if (tmp != null)
+                    {
+                        for(int k = 0; k < tmp.Size; k++)
+                        {
+                            parkingSpots[i, j + k] = true;
+                        }
+                    }
+                }
+            }
         }
 
         public IEnumerable<Vehicle> getAllVehicles()
@@ -171,83 +190,121 @@ namespace MVCGarage.Repositories
             context.SaveChanges();
         }
 
-        // 2d
+
+        // 2d, but with an array instad of using the database
         public int GetParkingSpot(int size)
         {
-            var tmp = context.ParkingSpots.LastOrDefault();
-            if (tmp == null)
-            {
-                return -1;
-            }
-            int xLength = tmp.X, yLength = tmp.Y;
+            int index = 0;
             bool found = false;
-            for (int i = 0; i < xLength; i++)
+
+            for(int i = 0; i < parkingSpots.GetLength(0); i++)
             {
-                for (int j = 0; j < yLength; j++)
+                for(int j = 0; j < parkingSpots.GetLength(1); j++)
                 {
                     found = true;
-                    for (int k = j; k < j + size; k++)
+                    index++;
+                    for(int k = j; k < j+size; k++)
                     {
-                        tmp = context.ParkingSpots.FirstOrDefault(s => s.X == i && s.Y == k);
-                        if (tmp == null || tmp.Occupied)
+                        if(parkingSpots[i, k])
                         {
-                            j += size - 1;
                             found = false;
                             break;
                         }
                     }
-
-                    if (found)
+                    if(found)
                     {
-                        for (int k = 0; k < size; k++)
+                        for(int k = 0; k < size; k++)
                         {
-                            tmp = context.ParkingSpots.FirstOrDefault(s => s.X == i && s.Y == j + k);
-                            if (tmp != null)
-                            {
-                                tmp.Occupied = !tmp.Occupied;
-                                // Update the database
-                                context.Entry(tmp).State = EntityState.Modified;
-                                context.SaveChanges();
-                            }
+                            parkingSpots[i, j + k] = true;
                         }
-                        tmp = context.ParkingSpots.FirstOrDefault(s => s.X == i && s.Y == j);
-                        return tmp.ID;
+                        return index;
                     }
                 }
             }
             return -1;
         }
 
-        // 
-        //private int ParkingSpotCheckFree(int start,int size){
 
-        //    for(int i = start; i < start+size;i++){
-        //        if (parkingspots[i]) {
+        //private int ParkingSpotCheckFree(int start, int size, bool[] arr)
+        //{
+        //    for (int i = start; i < start + size; i++)
+        //    {
+        //        if (arr[i])
+        //        {
         //            return -1;
         //        }
         //    }
         //    return start;
-
         //}
 
-        //public int GetParkingSpot(int size)
+        //public int GetParkingSpot(int size, bool[] arr)
         //{
-        //    int freespot = -1; 
-        //    for(int i = 0; i < parkingspots.Length;i++){
-        //        freespot = ParkingSpotCheckFree(i,size);
+        //    int freespot = -1;
+        //    for (int i = 0; i < arr.Length; i++)
+        //    {
+        //        freespot = ParkingSpotCheckFree(i, size, arr);
         //        if (freespot != -1)
         //        {
         //            for (int j = 0; i < size; i++)
         //            {
-        //                parkingspots[i + j] = true;
+        //                arr[i + j] = true;
         //            }
         //            return freespot;
         //        }
-        //        else {
+        //        else
+        //        {
         //            i += size - 1;
         //        }
         //    }
         //    return -1;
         //}
+
+        // 2d, with database
+        //public int GetParkingSpotDB(int size)
+        //{
+        //    var tmp = context.ParkingSpots.LastOrDefault();
+        //    if (tmp == null)
+        //    {
+        //        return -1;
+        //    }
+        //    int xLength = tmp.X, yLength = tmp.Y;
+        //    bool found = false;
+        //    for (int i = 0; i < xLength; i++)
+        //    {
+        //        for (int j = 0; j < yLength; j++)
+        //        {
+        //            found = true;
+        //            for (int k = j; k < j + size; k++)
+        //            {
+        //                tmp = context.ParkingSpots.FirstOrDefault(s => s.X == i && s.Y == k);
+        //                if (tmp == null || tmp.Occupied)
+        //                {
+        //                    j += size - 1;
+        //                    found = false;
+        //                    break;
+        //                }
+        //            }
+
+        //            if (found)
+        //            {
+        //                for (int k = 0; k < size; k++)
+        //                {
+        //                    tmp = context.ParkingSpots.FirstOrDefault(s => s.X == i && s.Y == j + k);
+        //                    if (tmp != null)
+        //                    {
+        //                        tmp.Occupied = !tmp.Occupied;
+        //                        // Update the database
+        //                        context.Entry(tmp).State = EntityState.Modified;
+        //                        context.SaveChanges();
+        //                    }
+        //                }
+        //                tmp = context.ParkingSpots.FirstOrDefault(s => s.X == i && s.Y == j);
+        //                return tmp.ID;
+        //            }
+        //        }
+        //    }
+        //    return -1;
+        //}
+
     }
 }

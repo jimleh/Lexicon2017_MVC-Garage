@@ -18,7 +18,7 @@ namespace MVCGarage.Controllers
          
         // GET: Garage
         // Här Ska Listan av alla parkerade bilar + nr av öppna platser.
-        public ActionResult Index( string search = null, bool _refid = false, bool _regnr = false, bool _owner = false, bool _date = false, bool _checkout = false)
+        public ActionResult Index( string search = null, bool _refid = false, bool _regnr = false, bool _owner = false, bool _date = false)
         {
             IEnumerable<Vehicle> vehicles;
             option[(int)SearchOption.RefId] = false;
@@ -37,7 +37,6 @@ namespace MVCGarage.Controllers
                 option[(int)SearchOption.RegNr] = _regnr;
                 option[(int)SearchOption.Owner] = _owner;
                 option[(int)SearchOption.Date] = _date;
-                option[(int)SearchOption.Checkout] = _checkout;
                 vehicles = repo.getFilteredVehicles(search, option);
             }
             return View(vehicles);
@@ -62,7 +61,6 @@ namespace MVCGarage.Controllers
                 option[(int)SearchOption.RegNr] = _regnr;
                 option[(int)SearchOption.Owner] = _owner;
                 option[(int)SearchOption.Date] = _date;
-                option[(int)SearchOption.Checkout] = true;
                 vehicles = repo.getFilteredVehicles(search, option);
             }
             return View(vehicles);
@@ -110,8 +108,15 @@ namespace MVCGarage.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Options(Vehicle vehicle)
+        public ActionResult Options(int? id)
         {
+            var vehicle = repo.getSpecificVehicle(id);
+            return View(vehicle);
+        }
+
+        public ActionResult DetailsArchived(int? id)
+        {
+            var vehicle = repo.getSpecificVehicle(id);
             return View(vehicle);
         }
 

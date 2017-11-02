@@ -20,6 +20,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -179,6 +181,8 @@
     <Content Include="Views\Garage\Index.cshtml" />
     <Content Include="Views\Garage\Options.cshtml" />
     <Content Include="Views\Garage\CheckIn.cshtml" />
+    <Content Include="Views\Garage\Archive.cshtml" />
+    <Content Include="Views\Garage\DetailsArchived.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710301007010_Initial.resx">

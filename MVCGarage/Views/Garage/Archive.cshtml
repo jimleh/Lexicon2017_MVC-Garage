@@ -4,19 +4,8 @@
     ViewBag.Title = "Garage AB";
 }
 
-<h2>Garage AB</h2>
+<h2>Archive</h2>
 
-
-<!--Knapp för att checka in ett fordon-->
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
-
-<input type="button" value="Check in" />
-<br />
-<br />
 
 <form method="get">
     <input type="search" name="search" value="Search vehicle..." />
@@ -26,8 +15,8 @@
     <label><input type="checkbox" name="_date" value="true" />Date</label>
 
     <button type="submit">Search</button>
-
 </form>
+
 <br />
 <br />
 
@@ -46,7 +35,10 @@
             @Html.DisplayNameFor(model => model.DateParked)
         </th>
         <th>
-           Options
+            @Html.DisplayNameFor(model => model.DateCheckout)
+        </th>
+        <th>
+           Details
         </th>
         <th></th>
     </tr>
@@ -66,7 +58,10 @@
             @Html.DisplayFor(modelItem => item.DateParked)
         </td>
         <td>
-            @Html.ActionLink("Options", "Options", new {  id=item.ParkingID  }) 
+            @Html.DisplayFor(modelItem => item.DateCheckout)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "DetailsArchived", new {  id=item.ParkingID  }) 
         </td>
     </tr>
 }

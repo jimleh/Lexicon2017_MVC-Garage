@@ -13,29 +13,25 @@ namespace MVCGarage.Repositories
         private SearchOption currentSort;
         private bool sortAscending;
 
-        private bool[] parkingspots = new bool[100];  
-
+        //private bool[] parkingspots = new bool[100];
 
         public GarageRepository()
         {
             context = new GarageContext();
             currentSort = SearchOption.RefId;
             sortAscending = false;
-            for (int i = 0; i < parkingspots.Length; i++)
-            {
-                parkingspots[i] =   false;
-            }
+            //for (int i = 0; i < parkingspots.Length; i++)
+            //{
+            //    parkingspots[i] = false;
+            //}
         }
-
-
-
 
         public IEnumerable<Vehicle> getAllVehicles()
         {
             return context.Vehicles.ToList();
         }
 
-        public Vehicle getSpecificVehicle(int? id) 
+        public Vehicle getSpecificVehicle(int? id)
         {
             Vehicle v = context.Vehicles.FirstOrDefault(a => a.ParkingID == id);
             return v;
@@ -46,11 +42,13 @@ namespace MVCGarage.Repositories
             IEnumerable<Vehicle> result = new List<Vehicle>();
             IEnumerable<Vehicle> query = context.Vehicles;
 
-            if (!options[(int)SearchOption.Checkout]) {
+            if (!options[(int)SearchOption.Checkout])
+            {
                 query = query.Where(a => a.DateCheckout == null);
             }
 
-            if (search == null){
+            if (search == null)
+            {
                 result = query;
             }
 
@@ -103,14 +101,18 @@ namespace MVCGarage.Repositories
             return result;
         }
 
-        public IEnumerable<Vehicle> SortlistBy(IEnumerable<Vehicle> query,SearchOption s) {
+        public IEnumerable<Vehicle> SortlistBy(IEnumerable<Vehicle> query, SearchOption s)
+        {
 
-            if (s == currentSort){
-                        sortAscending = !sortAscending;
-                    }else{
-                        currentSort = s;
-                        sortAscending = true;
-                    }
+            if (s == currentSort)
+            {
+                sortAscending = !sortAscending;
+            }
+            else
+            {
+                currentSort = s;
+                sortAscending = true;
+            }
 
             Func<Vehicle, object> predicate = null;
 
@@ -164,41 +166,88 @@ namespace MVCGarage.Repositories
         public void CheckOutVehicle(Vehicle vehicle)
         {
             vehicle.CheckOut();
-            
+
             context.Entry(vehicle).State = EntityState.Modified;
             context.SaveChanges();
         }
 
-
-        private int ParkingSpotCheckFree(int start,int size){
-
-            for(int i = start; i < start+size;i++){
-                if (parkingspots[i]) {
-                    return -1;
-                }
-            }
-            return start;
-                
-        }
-
+        // 2d
         public int GetParkingSpot(int size)
         {
-            int freespot = -1; 
-            for(int i = 0; i < parkingspots.Length;i++){
-                freespot = ParkingSpotCheckFree(i,size);
-                if (freespot != -1)
+            var tmp = context.ParkingSpots.LastOrDefault();
+            if (tmp == null)
+            {
+                return -1;
+            }
+            int xLength = tmp.X, yLength = tmp.Y;
+            bool found = false;
+            for (int i = 0; i < xLength; i++)
+            {
+                for (int j = 0; j < yLength; j++)
                 {
-                    for (int j = 0; i < size; i++)
+                    found = true;
+                    for (int k = j; k < j + size; k++)
                     {
-                        parkingspots[i + j] = true;
+                        tmp = context.ParkingSpots.FirstOrDefault(s => s.X == i && s.Y == k);
+                        if (tmp == null || tmp.Occupied)
+                        {
+                            j += size - 1;
+                            found = false;
+                            break;
+                        }
                     }
-                    return freespot;
-                }
-                else {
-                    i += size - 1;
+
+                    if (found)
+                    {
+                        for (int k = 0; k < size; k++)
+                        {
+                            tmp = context.ParkingSpots.FirstOrDefault(s => s.X == i && s.Y == j + k);
+                            if (tmp != null)
+                            {
+                                tmp.Occupied = !tmp.Occupied;
+                                // Update the database
+                                context.Entry(tmp).State = EntityState.Modified;
+                                context.SaveChanges();
+                            }
+                        }
+                        tmp = context.ParkingSpots.FirstOrDefault(s => s.X == i && s.Y == j);
+                        return tmp.ID;
+                    }
                 }
             }
             return -1;
         }
+
+        // 
+        //private int ParkingSpotCheckFree(int start,int size){
+
+        //    for(int i = start; i < start+size;i++){
+        //        if (parkingspots[i]) {
+        //            return -1;
+        //        }
+        //    }
+        //    return start;
+
+        //}
+
+        //public int GetParkingSpot(int size)
+        //{
+        //    int freespot = -1; 
+        //    for(int i = 0; i < parkingspots.Length;i++){
+        //        freespot = ParkingSpotCheckFree(i,size);
+        //        if (freespot != -1)
+        //        {
+        //            for (int j = 0; i < size; i++)
+        //            {
+        //                parkingspots[i + j] = true;
+        //            }
+        //            return freespot;
+        //        }
+        //        else {
+        //            i += size - 1;
+        //        }
+        //    }
+        //    return -1;
+        //}
     }
 }

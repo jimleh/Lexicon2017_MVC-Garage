@@ -24,8 +24,7 @@ namespace MVCGarage.Migrations
                         DateParked = DateTime.Now.ToString(),
                         Size = 3,
                         ParkingSpot = 1,
-                        Owner = "Christine";
-
+                        Owner = "Christine"
                     }
                 );
         }

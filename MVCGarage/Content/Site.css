@@ -1,9 +1,9 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    color: white;
+    color: black;
     border-color: black;
-    background-color: darkmagenta;
+    background-color: #ffffff;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -35,18 +35,18 @@ textarea {
 }
 
 .navbar-inverse {
-    background-color: darkred;
-    border-color: #18370f;
+    background-color: #4db8ff;
+    border-color: #0099ff;
 }
 
     .navbar-inverse .navbar-brand {
-        color: yellow;
+        color: #ffffff;
         font-size: 3.5em;
         margin-top: 20px;
     }
 
     .navbar-inverse .navbar-nav > li > a {
-        color: yellow;
+        color: #ffffff;
         font-size: 1.5em;
         margin-top: 28px;
     }

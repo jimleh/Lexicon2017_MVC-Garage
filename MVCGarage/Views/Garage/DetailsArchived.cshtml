@@ -1,0 +1,73 @@
+﻿@model MVCGarage.Models.Vehicle
+
+@{
+    ViewBag.Title = "Details Archived";
+}
+
+<h2>Details Archived</h2>
+
+<div>
+    <h4>Vehicle</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegistrationNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegistrationNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateParked)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateParked)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCheckout)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCheckout)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ParkingSpot)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ParkingSpot)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Size)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Size)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Owner)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to Archive", "Archive")
+</p>

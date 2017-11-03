@@ -27,6 +27,7 @@ namespace MVCGarage.Models
         public int ParkingSpot { get; set; }
         public int Size { get; set; }
         public string Owner { get; set; }
+        public int Fee { get; set; }
 
         public void FixStuff()
         {
@@ -47,6 +48,7 @@ namespace MVCGarage.Models
                     Size = 1;
                     break;
             }
+            updateFee();
         }
 
         public void CheckOut(string outdate = null){
@@ -58,7 +60,27 @@ namespace MVCGarage.Models
             {
                 DateCheckout = outdate;
             }
+
         }
+
+        public void updateFee(int cost = 50)
+        {
+
+            TimeSpan result;
+
+            if (DateCheckout == null)
+            {
+                result = DateTime.Now - Convert.ToDateTime(DateParked);
+            }
+            else
+            {
+                result = Convert.ToDateTime(DateCheckout) - Convert.ToDateTime(DateParked);
+            }
+
+            Fee = ((int)result.TotalMinutes + 1) * (cost*Size);
+        }
+
+
 
         // Will this be used at all?
         public override string ToString() 

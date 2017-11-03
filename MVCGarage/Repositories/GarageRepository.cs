@@ -12,6 +12,8 @@ namespace MVCGarage.Repositories
         private GarageContext context;
         private SearchOption currentSort;
         private bool sortAscending;
+        private int HourlyFee;
+
 
         //private bool[] parkingspots = new bool[100];
 
@@ -20,20 +22,31 @@ namespace MVCGarage.Repositories
             context = new GarageContext();
             currentSort = SearchOption.RefId;
             sortAscending = false;
+            HourlyFee = 50;
             //for (int i = 0; i < parkingspots.Length; i++)
             //{
             //    parkingspots[i] = false;
             //}
         }
 
+
+        public int getHourlyFee() {
+            return HourlyFee;
+        }
+
         public IEnumerable<Vehicle> getAllVehicles()
         {
-            return context.Vehicles.ToList();
+            List<Vehicle> vlist = context.Vehicles.ToList();
+            foreach (Vehicle v in vlist) {
+                v.updateFee(HourlyFee);
+            }
+            return vlist;
         }
 
         public Vehicle getSpecificVehicle(int? id)
         {
             Vehicle v = context.Vehicles.FirstOrDefault(a => a.ParkingID == id);
+            v.updateFee(HourlyFee);
             return v;
         }
 
@@ -46,58 +59,68 @@ namespace MVCGarage.Repositories
             {
                 query = query.Where(a => a.DateCheckout == null);
             }
+            else
+            {
+                query = query.Where(a => a.DateCheckout != null);
+            }
 
             if (search == null)
             {
                 result = query;
             }
-
-
-            for (int i = 0; i < options.Length; i++)
-            {
-                if (options[i])
+            else { 
+                for (int i = 0; i < options.Length; i++)
                 {
-                    switch (i)
+                    if (options[i])
                     {
-                        case (int)SearchOption.RefId:
-                            result = result.Union(
-                                query.Where(
-                                    a => a.ParkingID.ToString().ToLower().Contains(
-                                        search.ToLower()
+                        switch (i)
+                        {
+                            case (int)SearchOption.RefId:
+                                result = result.Union(
+                                    query.Where(
+                                        a => a.ParkingID.ToString().ToLower().Contains(
+                                            search.ToLower()
+                                        )
                                     )
-                                )
-                            );
-                            break;
-                        case (int)SearchOption.RegNr:
-                            result = result.Union(
-                                query.Where(
-                                    a => a.RegistrationNumber.ToString().ToLower().Contains(
-                                        search.ToLower()
+                                );
+                                break;
+                            case (int)SearchOption.RegNr:
+                                result = result.Union(
+                                    query.Where(
+                                        a => a.RegistrationNumber.ToString().ToLower().Contains(
+                                            search.ToLower()
+                                        )
                                     )
-                                )
-                            );
-                            break;
-                        case (int)SearchOption.Owner:
-                            result = result.Union(
-                                query.Where(
-                                    a => a.Owner.ToString().ToLower().Contains(
-                                        search.ToLower()
+                                );
+                                break;
+                            case (int)SearchOption.Owner:
+                                result = result.Union(
+                                    query.Where(
+                                        a => a.Owner.ToString().ToLower().Contains(
+                                            search.ToLower()
+                                        )
                                     )
-                                )
-                            );
-                            break;
-                        case (int)SearchOption.Date:
-                            result = result.Union(
-                                query.Where(
-                                    a => a.DateParked.ToString().ToLower().Contains(
-                                        search.ToLower()
+                                );
+                                break;
+                            case (int)SearchOption.Date:
+                                result = result.Union(
+                                    query.Where(
+                                        a => a.DateParked.ToString().ToLower().Contains(
+                                            search.ToLower()
+                                        )
                                     )
-                                )
-                            );
-                            break;
+                                );
+                                break;
+                        }
                     }
                 }
             }
+
+            foreach (Vehicle v in result)
+            {
+                v.updateFee(HourlyFee);
+            }
+
             return result;
         }
 
@@ -141,6 +164,12 @@ namespace MVCGarage.Repositories
                 query = query.OrderByDescending(predicate);
             }
 
+
+            foreach (Vehicle v in query)
+            {
+                v.updateFee(HourlyFee);
+            }
+
             return (query.ToList());
 
         }
@@ -170,53 +199,55 @@ namespace MVCGarage.Repositories
             context.Entry(vehicle).State = EntityState.Modified;
             context.SaveChanges();
         }
-
-        // 2d
-        public int GetParkingSpot(int size)
-        {
-            var tmp = context.ParkingSpots.LastOrDefault();
-            if (tmp == null)
-            {
-                return -1;
-            }
-            int xLength = tmp.X, yLength = tmp.Y;
-            bool found = false;
-            for (int i = 0; i < xLength; i++)
-            {
-                for (int j = 0; j < yLength; j++)
-                {
-                    found = true;
-                    for (int k = j; k < j + size; k++)
-                    {
-                        tmp = context.ParkingSpots.FirstOrDefault(s => s.X == i && s.Y == k);
-                        if (tmp == null || tmp.Occupied)
-                        {
-                            j += size - 1;
-                            found = false;
-                            break;
-                        }
-                    }
-
-                    if (found)
-                    {
-                        for (int k = 0; k < size; k++)
-                        {
-                            tmp = context.ParkingSpots.FirstOrDefault(s => s.X == i && s.Y == j + k);
-                            if (tmp != null)
-                            {
-                                tmp.Occupied = !tmp.Occupied;
-                                // Update the database
-                                context.Entry(tmp).State = EntityState.Modified;
-                                context.SaveChanges();
-                            }
-                        }
-                        tmp = context.ParkingSpots.FirstOrDefault(s => s.X == i && s.Y == j);
-                        return tmp.ID;
-                    }
-                }
-            }
-            return -1;
+        public int GetParkingSpot(int size) {
+            return 1; 
         }
+        // 2d
+        //public int GetParkingSpot(int size)
+        //{
+        //    var tmp = context.ParkingSpots.LastOrDefault();
+        //    if (tmp == null)
+        //    {
+        //        return -1;
+        //    }
+        //    int xLength = tmp.X, yLength = tmp.Y;
+        //    bool found = false;
+        //    for (int i = 0; i < xLength; i++)
+        //    {
+        //        for (int j = 0; j < yLength; j++)
+        //        {
+        //            found = true;
+        //            for (int k = j; k < j + size; k++)
+        //            {
+        //                tmp = context.ParkingSpots.FirstOrDefault(s => s.X == i && s.Y == k);
+        //                if (tmp == null || tmp.Occupied)
+        //                {
+        //                    j += size - 1;
+        //                    found = false;
+        //                    break;
+        //                }
+        //            }
+
+        //            if (found)
+        //            {
+        //                for (int k = 0; k < size; k++)
+        //                {
+        //                    tmp = context.ParkingSpots.FirstOrDefault(s => s.X == i && s.Y == j + k);
+        //                    if (tmp != null)
+        //                    {
+        //                        tmp.Occupied = !tmp.Occupied;
+        //                        // Update the database
+        //                        context.Entry(tmp).State = EntityState.Modified;
+        //                        context.SaveChanges();
+        //                    }
+        //                }
+        //                tmp = context.ParkingSpots.FirstOrDefault(s => s.X == i && s.Y == j);
+        //                return tmp.ID;
+        //            }
+        //        }
+        //    }
+        //    return -1;
+        //}
 
         // 
         //private int ParkingSpotCheckFree(int start,int size){

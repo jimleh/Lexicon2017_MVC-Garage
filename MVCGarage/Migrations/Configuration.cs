@@ -25,7 +25,7 @@ namespace MVCGarage.Migrations
                         RegistrationNumber = "111-" + i.ToString() + i.ToString() + i.ToString(),
                         DateParked = DateTime.Now.ToString(),
                         ParkingSpot = i,
-                        Size = 3,
+                        Size = 1,
                         Owner = "Christine" + i.ToString()
 
                     }

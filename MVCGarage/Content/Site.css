@@ -1,9 +1,9 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    color: black;
+    color: #999999;
     border-color: black;
-    background-color: #ffffff;
+    background-color: #404040;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -39,18 +39,37 @@ textarea {
     border-color: #0099ff;
 }
 
+.navbar-inverse .navbar-brand {
+    color: white;
+    font-size: 3.5em;
+    margin-top: 20px;
+}
     .navbar-inverse .navbar-brand {
-        color: #ffffff;
+        color: white;
         font-size: 3.5em;
         margin-top: 20px;
     }
+        .navbar-inverse .navbar-brand:hover {
+            color: #ccffff;
+            font-size: 3.6em;
+        }
 
     .navbar-inverse .navbar-nav > li > a {
-        color: #ffffff;
+        color: white;
+        font-size: 1.5em;
         font-size: 1.5em;
         margin-top: 28px;
     }
+        .navbar-inverse .navbar-nav > li > a:hover {
+            color: #ccffff;
+            font-size: 1.6em;
+        }
 
 th {
-    color: black;
+    color: #8c8c8c;
+}
+
+h2 {
+    color: #737373;
+    border-bottom-color:;
 }

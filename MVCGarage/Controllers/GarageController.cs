@@ -21,7 +21,7 @@ namespace MVCGarage.Controllers
         // Här Ska Listan av alla parkerade bilar + nr av öppna platser.
         public ActionResult Index( string search = null, bool _refid = false, bool _regnr = false, bool _owner = false, bool _date = false)
         {
-
+            ViewData.Add("FreeParkingSlots", repo.GetNumberOfFreeParkingSlots());
             IEnumerable<Vehicle> vehicles;
             option[(int)SearchOption.RefId] = false;
             option[(int)SearchOption.RegNr] = false;

@@ -220,6 +220,26 @@ namespace MVCGarage.Repositories
             context.Entry(vehicle).State = EntityState.Modified;
             context.SaveChanges();
         }
+
+        public int GetNumberOfFreeParkingSlots()
+        {
+            int n = 0;
+            for (int i = 0; i < parkingSpots.GetLength(0); i++)
+            {
+                for (int j = 0; j < parkingSpots.GetLength(1); j++)
+                {
+                    for (int k = 0; k < parkingSpots.GetLength(2); k++)
+                    {
+                        if (!parkingSpots[i, j, k])
+                        {
+                            n++;
+                        }
+                    }
+                }
+
+            }
+            return n;
+        }
         
         // Modified version of the previous ParkingSpotCheckFree method
         private bool ParkingSpotCheckFree(int x, int y, int start, int size)

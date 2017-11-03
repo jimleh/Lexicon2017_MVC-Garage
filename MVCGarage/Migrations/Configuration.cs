@@ -22,7 +22,7 @@ namespace MVCGarage.Migrations
                         Type = VehicleType.Car,
                         RegistrationNumber = "ABC-123",
                         DateParked = DateTime.Now.ToString(),
-                        Size = 3,
+                        Size = 1,
                         ParkingSpot = 1,
                         Owner = "Christine"
                     }

@@ -9,7 +9,6 @@ namespace MVCGarage
     public class GarageContext : DbContext
     {
         public DbSet<Models.Vehicle> Vehicles { get; set; }
-        //public DbSet<Models.ParkingSpot> ParkingSpots { get; set; }
 
         public GarageContext() : base("DefaultConnection")
         {

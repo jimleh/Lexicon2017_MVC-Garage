@@ -168,6 +168,15 @@ namespace MVCGarage.Controllers
         }
 
 
+        public ActionResult ViewGarage() {
+
+            GarageViewModel gvm = new GarageViewModel();
+            gvm.parkingSpots = repo.GetGarage();
+            gvm.vehicles = repo.getAllVehicles().Where(v => v.DateCheckout == null).ToList();
+            return View(gvm);
+        }
+
+
 
 
     }

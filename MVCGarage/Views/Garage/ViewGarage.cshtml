@@ -1,0 +1,60 @@
+﻿@model MVCGarage.Models.GarageViewModel
+
+
+@{
+    ViewBag.Title = "ViewGarage";
+}
+
+<br />
+<br />
+<br />
+<br />
+
+<h2>ViewGarage</h2>
+
+@{int index = 0; }
+
+@for (int i = 0; i < Model.parkingSpots.GetLength(0); i++)
+{
+
+   <p> våning @((i+1).ToString()); </p>
+
+
+    <table>
+    @for (int j = 0; j < Model.parkingSpots.GetLength(1); j++)
+    {
+        <tr>
+            @for (int k = 0; k < Model.parkingSpots.GetLength(2); k++)
+            {
+                index++;
+                if (Model.parkingSpots[i, j, k])
+                {
+                    <td class="lot-occupied">
+                        @{var vehicle = Model.vehicles.FirstOrDefault(v => v.ParkingSpot == index);
+                            if (vehicle != null)
+                            {
+                                <span>@vehicle.Size</span>
+                            }
+                            else
+                            {
+                                <span> </span>
+                            }
+                        }
+                    </td>
+                }
+                else
+                {
+                    <td class="lot-free">                        
+                        ■■<br>
+                        ■■
+                    </td>
+
+                }
+            }
+        </tr>
+    }
+
+    </table>
+}
+
+

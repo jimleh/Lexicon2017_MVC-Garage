@@ -42,7 +42,7 @@ namespace MVCGarage.Repositories
                     for (int k = 0; k < parkingSpots.GetLength(2); k++)
                     {
                         index++;
-                        var tmp = context.Vehicles.FirstOrDefault(v => v.ParkingSpot == index);
+                        var tmp = context.Vehicles.FirstOrDefault(v => v.ParkingSpot == index && v.DateCheckout == null);
                         if (tmp != null)
                         {
                             for (int l = 0; l < tmp.Size; l++)
@@ -195,6 +195,11 @@ namespace MVCGarage.Repositories
 
         }
 
+        public bool[,,] GetGarage()
+        {
+            return parkingSpots;
+        }
+
         public void CheckInVehicle(Vehicle vehicle)
         {
             context.Vehicles.Add(vehicle);
@@ -217,8 +222,8 @@ namespace MVCGarage.Repositories
 
         public void CheckOutVehicle(Vehicle vehicle)
         {
-            vehicle.CheckOut();
             ClearParkingSpotsForVehicle(vehicle.ParkingID, vehicle.Size);
+            vehicle.CheckOut();
             context.Entry(vehicle).State = EntityState.Modified;
             context.SaveChanges();
         }

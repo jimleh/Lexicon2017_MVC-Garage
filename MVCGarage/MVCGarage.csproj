@@ -124,24 +124,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710301007010_Initial.cs" />
-    <Compile Include="Migrations\201710301007010_Initial.Designer.cs">
-      <DependentUpon>201710301007010_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710301257490_UpdatedVehicle.cs" />
-    <Compile Include="Migrations\201710301257490_UpdatedVehicle.Designer.cs">
-      <DependentUpon>201710301257490_UpdatedVehicle.cs</DependentUpon>
+    <Compile Include="Migrations\201711030945051_initial.cs" />
+    <Compile Include="Migrations\201711030945051_initial.Designer.cs">
+      <DependentUpon>201711030945051_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\GarageViewModel.cs" />
     <Compile Include="Models\VehicleModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GarageRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\GarageDatabase.mdf" />
-    <Content Include="App_Data\GarageDatabase_log.ldf">
-      <DependentUpon>GarageDatabase.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -179,14 +172,7 @@
     <Content Include="Views\Garage\CheckIn.cshtml" />
     <Content Include="Views\Garage\Archive.cshtml" />
     <Content Include="Views\Garage\DetailsArchived.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710301007010_Initial.resx">
-      <DependentUpon>201710301007010_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710301257490_UpdatedVehicle.resx">
-      <DependentUpon>201710301257490_UpdatedVehicle.cs</DependentUpon>
-    </EmbeddedResource>
+    <Content Include="Views\Garage\ViewGarage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -194,6 +180,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711030945051_initial.resx">
+      <DependentUpon>201711030945051_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -16,12 +16,14 @@ namespace MVCGarage.Repositories
 
 
         //private bool[] parkingspots = new bool[100];
+        private bool[,,] parkingSpots = new bool[2, 10, 25];
 
         public GarageRepository()
         {
             context = new GarageContext();
             currentSort = SearchOption.RefId;
             sortAscending = false;
+            InitParkingSpots();
             HourlyFee = 50;
             //for (int i = 0; i < parkingspots.Length; i++)
             //{
@@ -29,9 +31,28 @@ namespace MVCGarage.Repositories
             //}
         }
 
-
-        public int getHourlyFee() {
-            return HourlyFee;
+        // Find all the occupied parking slots
+        protected void InitParkingSpots()
+        {
+            int index = 0;
+            for (int i = 0; i < parkingSpots.GetLength(0); i++)
+            {
+                for (int j = 0; j < parkingSpots.GetLength(1); j++)
+                {
+                    for (int k = 0; k < parkingSpots.GetLength(2); k++)
+                    {
+                        index++;
+                        var tmp = context.Vehicles.FirstOrDefault(v => v.ParkingSpot == index);
+                        if (tmp != null)
+                        {
+                            for (int l = 0; l < tmp.Size; l++)
+                            {
+                                parkingSpots[i, j, k + l] = true;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public IEnumerable<Vehicle> getAllVehicles()
@@ -182,6 +203,8 @@ namespace MVCGarage.Repositories
 
         public void DeleteVehicle(Vehicle vehicle)
         {
+            // Is this supposed to be here?
+            ClearParkingSpotsForVehicle(vehicle.ParkingID, vehicle.Size);
             context.Vehicles.Remove(vehicle);
             context.SaveChanges();
         }
@@ -199,11 +222,106 @@ namespace MVCGarage.Repositories
             context.Entry(vehicle).State = EntityState.Modified;
             context.SaveChanges();
         }
-        public int GetParkingSpot(int size) {
-            return 1; 
+
+        // To clear all the parking spots after a vehicle has been removed
+        protected void ClearParkingSpotsForVehicle(int id, int size)
+        {
+            int index = 0;
+            for (int i = 0; i < parkingSpots.GetLength(0); i++)
+            {
+                for (int j = 0; j < parkingSpots.GetLength(1); j++)
+                {
+                    for (int k = 0; k < parkingSpots.GetLength(2); k++)
+                    {
+                        index++;
+                        if (index == id)
+                        {
+                            for (int l = 0; l < size; l++)
+                            {
+                                parkingSpots[i, j, k + l] = false;
+                            }
+                        }
+                    }
+                }
+            }
         }
-        // 2d
-        //public int GetParkingSpot(int size)
+
+        // Modified version of the previous ParkingSpotCheckFree method
+        private bool ParkingSpotCheckFree(int x, int y, int start, int size)
+        {
+            for (int i = start; i < start + size; i++)
+            {
+                if (i > parkingSpots.GetLength(2) || parkingSpots[x, y, i])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        // 3d, but with an array instead of using the database
+        public int GetParkingSpot(int size)
+        {
+            int index = 1;
+
+            for(int i = 0; i < parkingSpots.GetLength(0); i++)
+            {
+                for(int j = 0; j < parkingSpots.GetLength(1); j++)
+                {
+                    for (int k = 0; k < parkingSpots.GetLength(2); k++)
+                    {
+                        if (ParkingSpotCheckFree(i, j, k, size))
+                        {
+                            for (int l = 0; l < size; l++)
+                            {
+                                parkingSpots[i, j, k + l] = true;
+                            }
+                            return index;
+                        }
+                        index++;
+                    }
+                }
+            }
+            return -1;
+        }
+
+
+        //private int ParkingSpotCheckFree(int start, int size, bool[] arr)
+        //{
+        //    for (int i = start; i < start + size; i++)
+        //    {
+        //        if (arr[i])
+        //        {
+        //            return -1;
+        //        }
+        //    }
+        //    return start;
+        //}
+
+        //public int GetParkingSpot(int size, bool[] arr)
+        //{
+        //    int freespot = -1;
+        //    for (int i = 0; i < arr.Length; i++)
+        //    {
+        //        freespot = ParkingSpotCheckFree(i, size, arr);
+        //        if (freespot != -1)
+        //        {
+        //            for (int j = 0; i < size; i++)
+        //            {
+        //                arr[i + j] = true;
+        //            }
+        //            return freespot;
+        //        }
+        //        else
+        //        {
+        //            i += size - 1;
+        //        }
+        //    }
+        //    return -1;
+        //}
+
+        // 2d, with database
+        //public int GetParkingSpotDB(int size)
         //{
         //    var tmp = context.ParkingSpots.LastOrDefault();
         //    if (tmp == null)
@@ -249,36 +367,5 @@ namespace MVCGarage.Repositories
         //    return -1;
         //}
 
-        // 
-        //private int ParkingSpotCheckFree(int start,int size){
-
-        //    for(int i = start; i < start+size;i++){
-        //        if (parkingspots[i]) {
-        //            return -1;
-        //        }
-        //    }
-        //    return start;
-
-        //}
-
-        //public int GetParkingSpot(int size)
-        //{
-        //    int freespot = -1; 
-        //    for(int i = 0; i < parkingspots.Length;i++){
-        //        freespot = ParkingSpotCheckFree(i,size);
-        //        if (freespot != -1)
-        //        {
-        //            for (int j = 0; i < size; i++)
-        //            {
-        //                parkingspots[i + j] = true;
-        //            }
-        //            return freespot;
-        //        }
-        //        else {
-        //            i += size - 1;
-        //        }
-        //    }
-        //    return -1;
-        //}
     }
 }

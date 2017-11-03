@@ -57,7 +57,6 @@ textarea {
     .navbar-inverse .navbar-nav > li > a {
         color: white;
         font-size: 1.5em;
-        font-size: 1.5em;
         margin-top: 28px;
     }
         .navbar-inverse .navbar-nav > li > a:hover {
@@ -65,11 +64,36 @@ textarea {
             font-size: 1.6em;
         }
 
+
 th {
-    color: #8c8c8c;
+    background-color: #000;
+    color: yellow;
 }
 
 h2 {
     color: #737373;
-    border-bottom-color:;
+    
+}
+
+hr {
+    border-color: red;
+}
+
+th, td {
+    border-bottom: 1px solid green;
+}
+
+tr {
+    color: #8c8c8c;
+    border-color: yellow;
+}
+
+
+.table thead > tr > th,
+.table tbody > tr > th,
+.table tfoot > tr > th,
+.table thead > tr > td,
+.table tbody > tr > td,
+.table tfoot > tr > td {
+    border-color: yellow;
 }

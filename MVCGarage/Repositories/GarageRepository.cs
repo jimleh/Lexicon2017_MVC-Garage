@@ -12,6 +12,8 @@ namespace MVCGarage.Repositories
         private GarageContext context;
         private SearchOption currentSort;
         private bool sortAscending;
+        private int HourlyFee;
+
 
         //private bool[] parkingspots = new bool[100];
         private bool[,,] parkingSpots = new bool[2, 10, 25];
@@ -22,6 +24,11 @@ namespace MVCGarage.Repositories
             currentSort = SearchOption.RefId;
             sortAscending = false;
             InitParkingSpots();
+            HourlyFee = 50;
+            //for (int i = 0; i < parkingspots.Length; i++)
+            //{
+            //    parkingspots[i] = false;
+            //}
         }
 
         // Find all the occupied parking slots
@@ -50,12 +57,17 @@ namespace MVCGarage.Repositories
 
         public IEnumerable<Vehicle> getAllVehicles()
         {
-            return context.Vehicles.ToList();
+            List<Vehicle> vlist = context.Vehicles.ToList();
+            foreach (Vehicle v in vlist) {
+                v.updateFee(HourlyFee);
+            }
+            return vlist;
         }
 
         public Vehicle getSpecificVehicle(int? id)
         {
             Vehicle v = context.Vehicles.FirstOrDefault(a => a.ParkingID == id);
+            v.updateFee(HourlyFee);
             return v;
         }
 
@@ -68,58 +80,68 @@ namespace MVCGarage.Repositories
             {
                 query = query.Where(a => a.DateCheckout == null);
             }
+            else
+            {
+                query = query.Where(a => a.DateCheckout != null);
+            }
 
             if (search == null)
             {
                 result = query;
             }
-
-
-            for (int i = 0; i < options.Length; i++)
-            {
-                if (options[i])
+            else { 
+                for (int i = 0; i < options.Length; i++)
                 {
-                    switch (i)
+                    if (options[i])
                     {
-                        case (int)SearchOption.RefId:
-                            result = result.Union(
-                                query.Where(
-                                    a => a.ParkingID.ToString().ToLower().Contains(
-                                        search.ToLower()
+                        switch (i)
+                        {
+                            case (int)SearchOption.RefId:
+                                result = result.Union(
+                                    query.Where(
+                                        a => a.ParkingID.ToString().ToLower().Contains(
+                                            search.ToLower()
+                                        )
                                     )
-                                )
-                            );
-                            break;
-                        case (int)SearchOption.RegNr:
-                            result = result.Union(
-                                query.Where(
-                                    a => a.RegistrationNumber.ToString().ToLower().Contains(
-                                        search.ToLower()
+                                );
+                                break;
+                            case (int)SearchOption.RegNr:
+                                result = result.Union(
+                                    query.Where(
+                                        a => a.RegistrationNumber.ToString().ToLower().Contains(
+                                            search.ToLower()
+                                        )
                                     )
-                                )
-                            );
-                            break;
-                        case (int)SearchOption.Owner:
-                            result = result.Union(
-                                query.Where(
-                                    a => a.Owner.ToString().ToLower().Contains(
-                                        search.ToLower()
+                                );
+                                break;
+                            case (int)SearchOption.Owner:
+                                result = result.Union(
+                                    query.Where(
+                                        a => a.Owner.ToString().ToLower().Contains(
+                                            search.ToLower()
+                                        )
                                     )
-                                )
-                            );
-                            break;
-                        case (int)SearchOption.Date:
-                            result = result.Union(
-                                query.Where(
-                                    a => a.DateParked.ToString().ToLower().Contains(
-                                        search.ToLower()
+                                );
+                                break;
+                            case (int)SearchOption.Date:
+                                result = result.Union(
+                                    query.Where(
+                                        a => a.DateParked.ToString().ToLower().Contains(
+                                            search.ToLower()
+                                        )
                                     )
-                                )
-                            );
-                            break;
+                                );
+                                break;
+                        }
                     }
                 }
             }
+
+            foreach (Vehicle v in result)
+            {
+                v.updateFee(HourlyFee);
+            }
+
             return result;
         }
 
@@ -161,6 +183,12 @@ namespace MVCGarage.Repositories
             else
             {
                 query = query.OrderByDescending(predicate);
+            }
+
+
+            foreach (Vehicle v in query)
+            {
+                v.updateFee(HourlyFee);
             }
 
             return (query.ToList());

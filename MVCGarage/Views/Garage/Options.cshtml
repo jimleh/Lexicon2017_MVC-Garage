@@ -75,10 +75,16 @@
             @Html.DisplayFor(model => model.Owner)
         </dd>
 
+        <dt>
+            Fee
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fee)
+        </dd>
+
     </dl>
 </div>
-<p>    
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ParkingID }) |
+<p>
     @Html.ActionLink("CheckOut", "CheckOut", new { id = Model.ParkingID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

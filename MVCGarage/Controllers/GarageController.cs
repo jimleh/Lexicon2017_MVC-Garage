@@ -46,8 +46,6 @@ namespace MVCGarage.Controllers
 
         public ActionResult Archive( string search = null, bool _refid = false, bool _regnr = false, bool _owner = false, bool _date = false)
         {
-            ViewBag.HourlyFee = repo.getHourlyFee();
-
             IEnumerable<Vehicle> vehicles;
             option[(int)SearchOption.RefId] = false;
             option[(int)SearchOption.RegNr] = false;

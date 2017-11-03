@@ -218,7 +218,7 @@ namespace MVCGarage.Repositories
         public void CheckOutVehicle(Vehicle vehicle)
         {
             vehicle.CheckOut();
-
+            ClearParkingSpotsForVehicle(vehicle.ParkingID, vehicle.Size);
             context.Entry(vehicle).State = EntityState.Modified;
             context.SaveChanges();
         }

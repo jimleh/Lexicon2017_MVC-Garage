@@ -17,42 +17,68 @@
 @for (int i = 0; i < Model.parkingSpots.GetLength(0); i++)
 {
 
-   <p> våning @((i+1).ToString()); </p>
+    <h4> Våning @((i + 1).ToString())</h4>
 
 
-    <table>
-    @for (int j = 0; j < Model.parkingSpots.GetLength(1); j++)
-    {
-        <tr>
-            @for (int k = 0; k < Model.parkingSpots.GetLength(2); k++)
-            {
-                index++;
-                if (Model.parkingSpots[i, j, k])
+    <table class="parking-table">
+        @for (int j = 0; j < Model.parkingSpots.GetLength(1); j++)
+        {
+            <tr>
+                @for (int k = 0; k < Model.parkingSpots.GetLength(2); k++)
                 {
-                    <td class="lot-occupied">
-                        @{var vehicle = Model.vehicles.FirstOrDefault(v => v.ParkingSpot == index);
+
+                    index++;
+
+                    if (Model.parkingSpots[i, j, k])
+                    {
+
+                        var vehicle = Model.vehicles.FirstOrDefault(v => v.ParkingSpot == index);
+
+                        if (vehicle != null)
+                        {
+                            if (vehicle.Size > 1)
+                            {
+                                <td class="lot-start">
+                                    <span>@vehicle.Size</span>
+                                </td>
+                            }
+
+                            else
+                            {
+                                <td class="lot-single">
+                                    <span>@vehicle.Size</span>
+                                </td>
+                            }
+                        }
+                        else
+                        {
+                            vehicle = Model.vehicles.FirstOrDefault(v => v.ParkingSpot + v.Size - 1 == index);
+
                             if (vehicle != null)
                             {
-                                <span>@vehicle.Size</span>
+                                <td class="lot-end">
+                                    <span> </span>
+                                </td>
                             }
                             else
                             {
-                                <span> </span>
+                                <td class="lot-mid">
+                                    <span> </span>
+                                </td>
+
                             }
                         }
-                    </td>
-                }
-                else
-                {
-                    <td class="lot-free">                        
-                        ■■<br>
-                        ■■
-                    </td>
 
+                    }
+                    else
+                    {
+                        <td class="lot-free">
+                            <span> </span>
+                        </td>
+                    }
                 }
-            }
-        </tr>
-    }
+            </tr>
+        }
 
     </table>
 }

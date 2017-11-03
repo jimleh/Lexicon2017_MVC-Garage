@@ -7,7 +7,7 @@ namespace MVCGarage.Models
 {
     public class GarageViewModel
     {
-        public bool[,,] parkingSpots = new bool[2, 10, 25];
+        public bool[,,] parkingSpots;
         public List<Vehicle> vehicles = new List<Vehicle>();
     }
 }

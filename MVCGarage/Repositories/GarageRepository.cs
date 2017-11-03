@@ -16,7 +16,7 @@ namespace MVCGarage.Repositories
 
 
         //private bool[] parkingspots = new bool[100];
-        private bool[,,] parkingSpots = new bool[2, 5, 5];
+        private bool[,,] parkingSpots = new bool[5, 10, 25];
 
         public GarageRepository()
         {

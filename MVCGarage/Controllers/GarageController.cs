@@ -91,6 +91,10 @@ namespace MVCGarage.Controllers
                     repo.CheckInVehicle(vehicle);
                     return RedirectToAction("Index");
                 }
+                else
+                {
+                    ViewBag.message = "No room for that vehicle";
+                }
             }
             return View(vehicle);
         }

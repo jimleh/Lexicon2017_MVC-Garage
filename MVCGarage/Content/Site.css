@@ -97,3 +97,13 @@ tr {
 .table tfoot > tr > td {
     border-color: yellow;
 }
+
+
+.lot-free {
+    background-color: greenyellow;
+    color: black;
+}
+.lot-occupied {
+    background-color: red;
+    color:white;
+}

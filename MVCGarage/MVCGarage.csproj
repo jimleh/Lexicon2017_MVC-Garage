@@ -124,19 +124,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710301007010_Initial.cs" />
-    <Compile Include="Migrations\201710301007010_Initial.Designer.cs">
-      <DependentUpon>201710301007010_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710301257490_UpdatedVehicle.cs" />
-    <Compile Include="Migrations\201710301257490_UpdatedVehicle.Designer.cs">
-      <DependentUpon>201710301257490_UpdatedVehicle.cs</DependentUpon>
+    <Compile Include="Migrations\201711030945051_initial.cs" />
+    <Compile Include="Migrations\201711030945051_initial.Designer.cs">
+      <DependentUpon>201711030945051_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201711021158362_UpdatedVehicleWithFee.cs" />
     <Compile Include="Migrations\201711021158362_UpdatedVehicleWithFee.Designer.cs">
       <DependentUpon>201711021158362_UpdatedVehicleWithFee.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\GarageViewModel.cs" />
     <Compile Include="Models\VehicleModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GarageRepository.cs" />
@@ -179,6 +176,7 @@
     <Content Include="Views\Garage\CheckIn.cshtml" />
     <Content Include="Views\Garage\Archive.cshtml" />
     <Content Include="Views\Garage\DetailsArchived.cshtml" />
+    <Content Include="Views\Garage\ViewGarage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201710301007010_Initial.resx">
@@ -200,6 +198,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711030945051_initial.resx">
+      <DependentUpon>201711030945051_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

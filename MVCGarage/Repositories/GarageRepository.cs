@@ -25,10 +25,6 @@ namespace MVCGarage.Repositories
             sortAscending = false;
             InitParkingSpots();
             HourlyFee = 50;
-            //for (int i = 0; i < parkingspots.Length; i++)
-            //{
-            //    parkingspots[i] = false;
-            //}
         }
 
         // Find all the occupied parking slots
@@ -42,7 +38,7 @@ namespace MVCGarage.Repositories
                     for (int k = 0; k < parkingSpots.GetLength(2); k++)
                     {
                         index++;
-                        var tmp = context.Vehicles.FirstOrDefault(v => v.ParkingSpot == index);
+                        var tmp = context.Vehicles.FirstOrDefault(v => v.ParkingSpot == index && v.DateCheckout == null);
                         if (tmp != null)
                         {
                             for (int l = 0; l < tmp.Size; l++)
@@ -147,14 +143,14 @@ namespace MVCGarage.Repositories
 
         public IEnumerable<Vehicle> SortlistBy(IEnumerable<Vehicle> query, SearchOption s)
         {
-
-            if (s == currentSort)
+            var Session = HttpContext.Current.Session;
+            if (Session["currentSort"] != null && (int)s == Session["currentSort"] as int?)
             {
                 sortAscending = !sortAscending;
             }
             else
             {
-                currentSort = s;
+                Session["currentSort"] = (int)s;
                 sortAscending = true;
             }
 
@@ -195,6 +191,11 @@ namespace MVCGarage.Repositories
 
         }
 
+        public bool[,,] GetGarage()
+        {
+            return parkingSpots;
+        }
+
         public void CheckInVehicle(Vehicle vehicle)
         {
             context.Vehicles.Add(vehicle);
@@ -203,8 +204,6 @@ namespace MVCGarage.Repositories
 
         public void DeleteVehicle(Vehicle vehicle)
         {
-            // Is this supposed to be here?
-            ClearParkingSpotsForVehicle(vehicle.ParkingID, vehicle.Size);
             context.Vehicles.Remove(vehicle);
             context.SaveChanges();
         }
@@ -218,34 +217,10 @@ namespace MVCGarage.Repositories
         public void CheckOutVehicle(Vehicle vehicle)
         {
             vehicle.CheckOut();
-            ClearParkingSpotsForVehicle(vehicle.ParkingID, vehicle.Size);
             context.Entry(vehicle).State = EntityState.Modified;
             context.SaveChanges();
         }
-
-        // To clear all the parking spots after a vehicle has been removed
-        protected void ClearParkingSpotsForVehicle(int id, int size)
-        {
-            int index = 0;
-            for (int i = 0; i < parkingSpots.GetLength(0); i++)
-            {
-                for (int j = 0; j < parkingSpots.GetLength(1); j++)
-                {
-                    for (int k = 0; k < parkingSpots.GetLength(2); k++)
-                    {
-                        index++;
-                        if (index == id)
-                        {
-                            for (int l = 0; l < size; l++)
-                            {
-                                parkingSpots[i, j, k + l] = false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
+        
         // Modified version of the previous ParkingSpotCheckFree method
         private bool ParkingSpotCheckFree(int x, int y, int start, int size)
         {

@@ -7,13 +7,13 @@ namespace MVCGarage.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class UpdatedVehicle : IMigrationMetadata
+    public sealed partial class initial : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdatedVehicle));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initial));
         
         string IMigrationMetadata.Id
         {
-            get { return "201710301257490_UpdatedVehicle"; }
+            get { return "201711030945051_initial"; }
         }
         
         string IMigrationMetadata.Source

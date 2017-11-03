@@ -221,7 +221,7 @@ namespace MVCGarage.Repositories
             context.SaveChanges();
         }
 
-        public int GetNumberOfFreeParkingSlots()
+        public int GetNumberOfFreeParkingSpots()
         {
             int n = 0;
             for (int i = 0; i < parkingSpots.GetLength(0); i++)

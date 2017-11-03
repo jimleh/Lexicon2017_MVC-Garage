@@ -66,8 +66,8 @@ textarea {
 
 
 th {
-    background-color: #000;
-    color: yellow;
+    background-color: #a6a6a6;
+    color: #404040;
 }
 
 h2 {
@@ -76,16 +76,15 @@ h2 {
 }
 
 hr {
-    border-color: red;
+    border-color: #737373;
 }
 
 th, td {
-    border-bottom: 1px solid green;
+    border-bottom: 1px solid #595959;
 }
 
 tr {
     color: #8c8c8c;
-    border-color: yellow;
 }
 
 
@@ -95,15 +94,15 @@ tr {
 .table thead > tr > td,
 .table tbody > tr > td,
 .table tfoot > tr > td {
-    border-color: yellow;
+    border-color: #595959;
 }
 
 
 .lot-free {
-    background-color: greenyellow;
-    color: black;
+    background-color: #8c8c8c;
+    color: #4db8ff;
 }
 .lot-occupied {
-    background-color: red;
-    color:white;
+    background-color: #8c8c8c;
+    color: white;
 }

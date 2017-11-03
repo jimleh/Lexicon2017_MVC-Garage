@@ -14,7 +14,7 @@ namespace MVCGarage.Repositories
         private bool sortAscending;
 
         //private bool[] parkingspots = new bool[100];
-        private bool[,] parkingSpots = new bool[10, 25];
+        private bool[,,] parkingSpots = new bool[2, 10, 25];
 
         public GarageRepository()
         {
@@ -32,13 +32,16 @@ namespace MVCGarage.Repositories
             {
                 for (int j = 0; j < parkingSpots.GetLength(1); j++)
                 {
-                    index++;
-                    var tmp = context.Vehicles.FirstOrDefault(v => v.ParkingSpot == index);
-                    if (tmp != null)
+                    for (int k = 0; k < parkingSpots.GetLength(2); k++)
                     {
-                        for(int k = 0; k < tmp.Size; k++)
+                        index++;
+                        var tmp = context.Vehicles.FirstOrDefault(v => v.ParkingSpot == index);
+                        if (tmp != null)
                         {
-                            parkingSpots[i, j + k] = true;
+                            for (int l = 0; l < tmp.Size; l++)
+                            {
+                                parkingSpots[i, j, k + l] = true;
+                            }
                         }
                     }
                 }
@@ -200,12 +203,15 @@ namespace MVCGarage.Repositories
             {
                 for (int j = 0; j < parkingSpots.GetLength(1); j++)
                 {
-                    index++;
-                    if(index == id)
+                    for (int k = 0; k < parkingSpots.GetLength(2); k++)
                     {
-                        for (int k = 0; k < size; k++)
+                        index++;
+                        if (index == id)
                         {
-                            parkingSpots[i, j + k] = false;
+                            for (int l = 0; l < size; l++)
+                            {
+                                parkingSpots[i, j, k + l] = false;
+                            }
                         }
                     }
                 }
@@ -213,11 +219,11 @@ namespace MVCGarage.Repositories
         }
 
         // Modified version of the previous ParkingSpotCheckFree method
-        private bool ParkingSpotCheckFree(int x, int start, int size)
+        private bool ParkingSpotCheckFree(int x, int y, int start, int size)
         {
             for (int i = start; i < start + size; i++)
             {
-                if (i > parkingSpots.GetLength(1) || parkingSpots[x, i])
+                if (i > parkingSpots.GetLength(2) || parkingSpots[x, y, i])
                 {
                     return false;
                 }
@@ -225,7 +231,7 @@ namespace MVCGarage.Repositories
             return true;
         }
 
-        // 2d, but with an array instad of using the database
+        // 3d, but with an array instead of using the database
         public int GetParkingSpot(int size)
         {
             int index = 1;
@@ -234,15 +240,18 @@ namespace MVCGarage.Repositories
             {
                 for(int j = 0; j < parkingSpots.GetLength(1); j++)
                 {
-                    if(ParkingSpotCheckFree(i, j, size))
+                    for (int k = 0; k < parkingSpots.GetLength(2); k++)
                     {
-                        for (int k = 0; k < size; k++)
+                        if (ParkingSpotCheckFree(i, j, k, size))
                         {
-                            parkingSpots[i, j + k] = true;
+                            for (int l = 0; l < size; l++)
+                            {
+                                parkingSpots[i, j, k + l] = true;
+                            }
+                            return index;
                         }
-                        return index;
+                        index++;
                     }
-                    index++;
                 }
             }
             return -1;

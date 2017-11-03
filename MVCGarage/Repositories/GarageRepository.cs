@@ -16,7 +16,7 @@ namespace MVCGarage.Repositories
 
 
         //private bool[] parkingspots = new bool[100];
-        private bool[,,] parkingSpots = new bool[2, 10, 25];
+        private bool[,,] parkingSpots = new bool[2, 5, 5];
 
         public GarageRepository()
         {
@@ -226,7 +226,8 @@ namespace MVCGarage.Repositories
         {
             for (int i = start; i < start + size; i++)
             {
-                if (i > parkingSpots.GetLength(2) || parkingSpots[x, y, i])
+
+                if (i >= parkingSpots.GetLength(2) || parkingSpots[x, y, i])
                 {
                     return false;
                 }

@@ -1,0 +1,15 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\MVCGarage",
+    "\\MVCGarage\\App_Start",
+    "\\MVCGarage\\Content",
+    "\\MVCGarage\\Controllers",
+    "\\MVCGarage\\DataAccess",
+    "\\MVCGarage\\Migrations",
+    "\\MVCGarage\\Repositories",
+    "\\MVCGarage\\Views",
+    "\\MVCGarage\\Views\\Garage"
+  ],
+  "PreviewInSolutionExplorer": false
+}
